@@ -59,7 +59,14 @@ const Header = props => {
 const mapStateToProps = state => {
   return {
     // immutable数据是不能.的,只能用get()方法获取
-    focused: state.header.get('focused')
+    /**
+     * immutable可以这么取
+     * ①state.get('header').get('focused')
+     * ②state.getIn(['header', 'focused'])
+     * 这两种取值方式，效果相同，都是从state中取属性为header的值，
+     * 再从header中取属性值为focused的值
+     */
+    focused: state.getIn(['header', 'focused'])
   };
 };
 
