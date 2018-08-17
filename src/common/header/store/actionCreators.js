@@ -1,3 +1,3 @@
-import * as actionTypes from "./constants";
+import { constants } from "../store";
 
-export const searchFocus = () => ({ type: actionTypes.SEARCH_FOCUS });
+export const searchFocus = () => ({ type: constants.SEARCH_FOCUS });
