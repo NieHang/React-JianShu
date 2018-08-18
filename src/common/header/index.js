@@ -16,7 +16,7 @@ import {
 } from "./style";
 
 const Header = props => {
-  const { focused, handleInputFocus } = props;
+  const { focused, handleInputFocus, handleInputBlur } = props;
 
   return (
     <HeaderWrapper>
@@ -39,7 +39,7 @@ const Header = props => {
             <NavSearch
               className={focused ? "focused" : ""}
               onFocus={handleInputFocus}
-              onBlur={handleInputFocus}
+              onBlur={handleInputBlur}
             />
           </CSSTransition>
           <i className={focused ? "focused iconfont" : "iconfont"}>&#xe60a;</i>
@@ -74,6 +74,9 @@ const mapDispatchToProps = dispatch => {
   return {
     handleInputFocus() {
       dispatch(actionCreators.searchFocus());
+    },
+    handleInputBlur() {
+      dispatch(actionCreators.searchBlur());
     }
   };
 };

@@ -9,9 +9,10 @@ const defaultState = fromJS({
 
 export default (state = defaultState, action) => {
   if (action.type === constants.SEARCH_FOCUS) {
-    const newState = JSON.parse(JSON.stringify(state));
-    newState.focused = newState.focused ? false : true;
-    return fromJS(newState);
+    return state.set('focused', true);
+  }
+  if (action.type === constants.SEARCH_BLUR) {
+    return state.set('focused', false);
   }
   return state;
 };
