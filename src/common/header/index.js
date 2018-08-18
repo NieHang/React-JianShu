@@ -1,7 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCompass, faMobileAlt } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCompass,
+  faMobileAlt,
+  faSync
+} from "@fortawesome/free-solid-svg-icons";
 import { CSSTransition } from "react-transition-group";
 import { actionCreators } from "./store";
 import {
@@ -12,11 +16,52 @@ import {
   NavSearch,
   Addition,
   Button,
-  SearchWrapper
+  SearchWrapper,
+  SearchInfo,
+  SearchInfoTitle,
+  SearchInfoSwitch,
+  SearchInfoList,
+  SearchInfoItem
 } from "./style";
 
+const getListArea = show => {
+  if (show) {
+    return (
+      <SearchInfo>
+        <SearchInfoTitle>
+          热门搜索
+          <SearchInfoSwitch>
+            <FontAwesomeIcon icon={faSync} size="xs" rotation={90} />
+            换一批
+          </SearchInfoSwitch>
+        </SearchInfoTitle>
+        <SearchInfoList>
+          <SearchInfoItem>React</SearchInfoItem>
+          <SearchInfoItem>Node</SearchInfoItem>
+          <SearchInfoItem>Git</SearchInfoItem>
+          <SearchInfoItem>Es6</SearchInfoItem>
+          <SearchInfoItem>Http</SearchInfoItem>
+          <SearchInfoItem>区块链</SearchInfoItem>
+          <SearchInfoItem>小程序</SearchInfoItem>
+          <SearchInfoItem>杭州</SearchInfoItem>
+          <SearchInfoItem>vue</SearchInfoItem>
+          <SearchInfoItem>毕业</SearchInfoItem>
+          <SearchInfoItem>PHP</SearchInfoItem>
+          <SearchInfoItem>Java</SearchInfoItem>
+        </SearchInfoList>
+      </SearchInfo>
+    );
+  } else {
+    return null;
+  }
+};
+
 const Header = props => {
-  const { focused, handleInputFocus, handleInputBlur } = props;
+  const {
+    focused,
+    handleInputFocus,
+    handleInputBlur,
+  } = props;
 
   return (
     <HeaderWrapper>
@@ -35,7 +80,7 @@ const Header = props => {
           <i className="iconfont">&#xe636;</i>
         </NavItem>
         <SearchWrapper>
-          <CSSTransition in={focused} timeout={1000} classNames="slide">
+          <CSSTransition in={focused} timeout={500} classNames="slide">
             <NavSearch
               className={focused ? "focused" : ""}
               onFocus={handleInputFocus}
@@ -43,6 +88,7 @@ const Header = props => {
             />
           </CSSTransition>
           <i className={focused ? "focused iconfont" : "iconfont"}>&#xe60a;</i>
+          {getListArea(focused)}
         </SearchWrapper>
         <Addition>
           <Button className="reg">注册</Button>
@@ -66,7 +112,7 @@ const mapStateToProps = state => {
      * 这两种取值方式，效果相同，都是从state中取属性为header的值，
      * 再从header中取属性值为focused的值
      */
-    focused: state.getIn(['header', 'focused'])
+    focused: state.getIn(["header", "focused"])
   };
 };
 
