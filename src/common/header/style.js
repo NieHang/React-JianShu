@@ -96,6 +96,11 @@ export const SearchInfoSwitch = styled.span`
   float: right;
   font-size: 13px;
   cursor: pointer;
+  transition: color .5s ease;
+  -webkit-transition: color .5s ease;
+  &:hover {
+    color: #333;
+  }
 `;
 
 export const SearchInfoList = styled.div``;
