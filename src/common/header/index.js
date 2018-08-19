@@ -3,8 +3,7 @@ import { connect } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCompass,
-  faMobileAlt,
-  faSync
+  faMobileAlt
 } from "@fortawesome/free-solid-svg-icons";
 import { CSSTransition } from "react-transition-group";
 import { actionCreators } from "./store";
@@ -57,7 +56,7 @@ class Header extends Component {
                 onBlur={handleInputBlur}
               />
             </CSSTransition>
-            <i className={focused ? "focused iconfont" : "iconfont"}>
+            <i className={focused ? "focused iconfont zoom" : "iconfont zoom"}>
               &#xe60a;
             </i>
             {this.getListArea()}
@@ -98,21 +97,16 @@ class Header extends Component {
     }
 
     if (focused || mouseIn) {
-      return (
-        <SearchInfo
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
-        >
+      return <SearchInfo onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
           <SearchInfoTitle>
             热门搜索
-            <SearchInfoSwitch onClick={()=>handleChangePage(page, totalPage)}>
-              <FontAwesomeIcon icon={faSync} size="xs" rotation={90} />
+            <SearchInfoSwitch onClick={() => handleChangePage(page, totalPage, this.spinIcon)}>
+              <i ref={icon => {this.spinIcon = icon}} className="iconfont spin">&#xe851;</i>
               换一批
             </SearchInfoSwitch>
           </SearchInfoTitle>
           <SearchInfoList>{pageList}</SearchInfoList>
-        </SearchInfo>
-      );
+        </SearchInfo>;
     } else {
       return null;
     }
@@ -152,7 +146,14 @@ const mapDispatchToProps = dispatch => {
     handleMouseLeave() {
       dispatch(actionCreators.mouseLeave());
     },
-    handleChangePage(page, totalPage) {
+    handleChangePage(page, totalPage, spin) {
+      let originAngle = spin.style.transform.replace(/[^0-9]/ig, '');
+      if (originAngle) {
+        originAngle = parseInt(originAngle, 10);
+      } else {
+        originAngle = 0;
+      }
+      spin.style.transform = `rotate(${originAngle + 360}deg)`;
       if (page < totalPage) {
         dispatch(actionCreators.changePage(page + 1));
       } else {
