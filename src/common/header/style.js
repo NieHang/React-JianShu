@@ -65,7 +65,6 @@ export const SearchWrapper = styled.div`
 export const SearchInfo = styled.div`
   position: absolute;
   width: 260px;
-  height: 160px;
   left: 20px;
   top: 56px;
   padding: 0 20px;
