@@ -3,7 +3,9 @@
 // redux-immutable中的combineReducers()方法返回的是immutable对象
 import { combineReducers } from 'redux-immutable';
 import { headerReducer } from '../common/header/store';
+import { reducer as homeReducer } from '../pages/home/store';
 
 export default combineReducers({
-  header: headerReducer
+  header: headerReducer,
+  home: homeReducer
 });
