@@ -1,5 +1,6 @@
 // immutable库可以让state不被修改
 import { fromJS } from "immutable";
+import { constants } from "./index";
 
 // fromJs将defaultState转变成immutable对象
 const defaultState = fromJS({
@@ -11,7 +12,7 @@ const defaultState = fromJS({
 
 export default (state = defaultState, action) => {
   switch (action.type) {
-    case "changeHomeData":
+    case constants.CHANGE_HOME_DATA:
       return state.merge({
         topicList: action.topicList,
         articleList: action.articleList,
