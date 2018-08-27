@@ -5,7 +5,6 @@ import { WriterContainer } from "../style";
 class Writer extends Component {
   render() {
     const { writer } = this.props;
-    console.log(writer);
     return (
       <WriterContainer>
         <div className="title">
