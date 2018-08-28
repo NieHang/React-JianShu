@@ -208,3 +208,15 @@ export const WriterContainer = styled.div`
     }
   }
 `;
+
+export const LoadMore = styled.div`
+  width: 100%;
+  height: 40px;
+  margin: 30px 0;
+  line-height: 40px;
+  text-align: center;
+  background-color: #a5a5a5;
+  border-radius: 20px;
+  color: #fff;
+  cursor: pointer;
+`;
