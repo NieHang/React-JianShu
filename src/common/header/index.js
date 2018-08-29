@@ -7,6 +7,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { CSSTransition } from "react-transition-group";
 import { actionCreators } from "./store";
+import { Link } from 'react-router-dom';
 import {
   HeaderWrapper,
   Logo,
@@ -27,17 +28,13 @@ class Header extends Component {
   render() {
     const { focused, list, handleInputFocus, handleInputBlur } = this.props;
 
-    return (
-      <HeaderWrapper>
-        <Logo href="/" />
+    return <HeaderWrapper>
+        <Link to='/'>
+          <Logo />
+        </Link>
         <Nav>
           <NavItem className="left active">
-            <FontAwesomeIcon
-              icon={faCompass}
-              spin
-              size="lg"
-              transform="left-4"
-            />
+            <FontAwesomeIcon icon={faCompass} spin size="lg" transform="left-4" />
             首页
           </NavItem>
           <NavItem className="left">
@@ -50,13 +47,15 @@ class Header extends Component {
           </NavItem>
           <SearchWrapper>
             <CSSTransition in={focused} timeout={500} classNames="slide">
-              <NavSearch
-                className={focused ? "focused" : ""}
-                onFocus={() => {handleInputFocus(list)}}
-                onBlur={handleInputBlur}
-              />
+              <NavSearch className={focused ? "focused" : ""} onFocus={() => {
+                  handleInputFocus(list);
+                }} onBlur={handleInputBlur} />
             </CSSTransition>
-            <i className={focused ? "focused iconfont zoom" : "iconfont zoom"}>
+            <i
+              className={
+                focused ? "focused iconfont zoom" : "iconfont zoom"
+              }
+            >
               &#xe60a;
             </i>
             {this.getListArea()}
@@ -69,8 +68,7 @@ class Header extends Component {
             </Button>
           </Addition>
         </Nav>
-      </HeaderWrapper>
-    );
+      </HeaderWrapper>;
   }
 
   getListArea() {

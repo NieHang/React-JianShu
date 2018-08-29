@@ -13,17 +13,15 @@ class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        <div>
-          <Header />
-          {/* 使用路由 */}
-          <BrowserRouter>
-            <div>
-              {/* exact属性就是只匹配和path完全相同的路径 */}
-              <Route path="/" exact component={Home} />
-              <Route path="/detail" exact component={Detail} />
-            </div>
-          </BrowserRouter>
-        </div>
+        {/* 使用路由 */}
+        <BrowserRouter>
+          <div>
+            {/* exact属性就是只匹配和path完全相同的路径 */}
+            <Header />
+            <Route path="/" exact component={Home} />
+            <Route path="/detail" exact component={Detail} />
+          </div>
+        </BrowserRouter>
       </Provider>
     );
   }

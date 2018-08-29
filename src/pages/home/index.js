@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { HomeWrapper, HomeLeft, HomeRight, BackTop } from "./style";
 import { connect } from "react-redux";
 import List from "./components/List";
@@ -8,7 +8,11 @@ import Topic from "./components/Topic";
 import Writer from "./components/Writer";
 import { actionCreators } from "./store";
 
-class Home extends Component {
+// PureComponent代替了shouldComponentUpdate的作用
+// PureComponent最好和immutable一起使用
+// 只用PureComponent而不用immutable的话，会有一些意想不到的坑
+class Home extends PureComponent {
+
   handleScrollTop() {
     window.scrollTo(0, 0);
   }
