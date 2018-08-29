@@ -1,30 +1,24 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { DetailWrapper, Header, Content } from "./style";
+import { connect } from "react-redux";
 
-export default class Detail extends Component {
+class Detail extends PureComponent {
   render() {
-    return (
-      <DetailWrapper>
-        <Header>衡水中学，被外地人占领的高考工厂</Header>
-        <Content>
-          <img
-            src="https://upload-images.jianshu.io/upload_images/10295326-b7d6641a66c7fafc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/524/format/webp"
-            alt=""
-          />
-          <p>
-            2017年，衡水中学考上清华北大的人数是176人，2016年是139人，再往前推到2015年，这个人数是119人。但是在这些辉煌的名单背后，却是外地来衡水上学人数暴涨，本地人上好高中越来越艰难的尴尬处境。
-          </p>
-          <p>
-            2017年，衡水中学考上清华北大的人数是176人，2016年是139人，再往前推到2015年，这个人数是119人。但是在这些辉煌的名单背后，却是外地来衡水上学人数暴涨，本地人上好高中越来越艰难的尴尬处境。
-          </p>
-          <p>
-            2017年，衡水中学考上清华北大的人数是176人，2016年是139人，再往前推到2015年，这个人数是119人。但是在这些辉煌的名单背后，却是外地来衡水上学人数暴涨，本地人上好高中越来越艰难的尴尬处境。
-          </p>
-          <p>
-            2017年，衡水中学考上清华北大的人数是176人，2016年是139人，再往前推到2015年，这个人数是119人。但是在这些辉煌的名单背后，却是外地来衡水上学人数暴涨，本地人上好高中越来越艰难的尴尬处境。
-          </p>
-        </Content>
-      </DetailWrapper>
-    );
+    const { title, content } = this.props;
+    return <DetailWrapper>
+        <Header>{title}</Header>
+        {/* dangerouslySetInnerHTML用来转义标签 */}
+        <Content dangerouslySetInnerHTML={{ __html: content }} />
+      </DetailWrapper>;
   }
 }
+
+const mapState = state => ({
+  title: state.getIn(["detail", "title"]),
+  content: state.getIn(["detail", "content"])
+});
+
+export default connect(
+  mapState,
+  null
+)(Detail);
