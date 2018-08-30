@@ -19,7 +19,7 @@ class App extends Component {
             {/* exact属性就是只匹配和path完全相同的路径 */}
             <Header />
             <Route path="/" exact component={Home} />
-            <Route path="/detail" exact component={Detail} />
+            <Route path="/detail/:id" exact component={Detail} />
           </div>
         </BrowserRouter>
       </Provider>
