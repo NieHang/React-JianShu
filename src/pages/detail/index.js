@@ -2,6 +2,7 @@ import React, { PureComponent } from "react";
 import { DetailWrapper, Header, Content } from "./style";
 import { connect } from "react-redux";
 import { actionCreators } from "./store";
+import { withRouter } from 'react-router-dom';
 
 class Detail extends PureComponent {
   render() {
@@ -31,7 +32,8 @@ const mapDispatch = dispatch => ({
   }
 });
 
+// withRouter(Detail)意思为，detail有能力获取router中的所有内容
 export default connect(
   mapState,
   mapDispatch
-)(Detail);
+)(withRouter(Detail));
