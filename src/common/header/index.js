@@ -1,13 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCompass,
-  faMobileAlt
-} from "@fortawesome/free-solid-svg-icons";
+import { faCompass, faMobileAlt } from "@fortawesome/free-solid-svg-icons";
 import { CSSTransition } from "react-transition-group";
 import { actionCreators } from "./store";
-import { Link } from 'react-router-dom';
+import { actionCreators as loginActionCreators } from '../../pages/login/store';
+import { Link } from "react-router-dom";
 import {
   HeaderWrapper,
   Logo,
@@ -26,36 +24,55 @@ import {
 
 class Header extends Component {
   render() {
-    const { focused, list, handleInputFocus, handleInputBlur } = this.props;
+    const {
+      focused,
+      list,
+      login,
+      logout,
+      handleInputFocus,
+      handleInputBlur
+    } = this.props;
 
-    return <HeaderWrapper>
-        <Link to='/'>
+    return (
+      <HeaderWrapper>
+        <Link to="/">
           <Logo />
         </Link>
         <Nav>
           <NavItem className="left active">
-            <FontAwesomeIcon icon={faCompass} spin size="lg" transform="left-4" />
+            <FontAwesomeIcon
+              icon={faCompass}
+              spin
+              size="lg"
+              transform="left-4"
+            />
             首页
           </NavItem>
           <NavItem className="left">
             <FontAwesomeIcon icon={faMobileAlt} size="lg" transform="left-4" />
             下载APP
           </NavItem>
-          <NavItem className="right">登录</NavItem>
+          {login ? (
+            <NavItem onClick={logout} className="right">退出</NavItem>
+          ) : (
+            <Link to='/login'>
+              <NavItem className="right">登录</NavItem>
+            </Link>
+          )}
           <NavItem className="right">
             <i className="iconfont">&#xe636;</i>
           </NavItem>
           <SearchWrapper>
             <CSSTransition in={focused} timeout={500} classNames="slide">
-              <NavSearch className={focused ? "focused" : ""} onFocus={() => {
+              <NavSearch
+                className={focused ? "focused" : ""}
+                onFocus={() => {
                   handleInputFocus(list);
-                }} onBlur={handleInputBlur} />
+                }}
+                onBlur={handleInputBlur}
+              />
             </CSSTransition>
-            <i
-              className={
-                focused ? "focused iconfont zoom" : "iconfont zoom"
-              }
-            >
+            <i className={focused ? "focused iconfont zoom" : "iconfont zoom"}>
               &#xe60a;
             </i>
             {this.getListArea()}
@@ -68,7 +85,8 @@ class Header extends Component {
             </Button>
           </Addition>
         </Nav>
-      </HeaderWrapper>;
+      </HeaderWrapper>
+    );
   }
 
   getListArea() {
@@ -80,7 +98,7 @@ class Header extends Component {
       totalPage,
       handleMouseEnter,
       handleMouseLeave,
-      handleChangePage,
+      handleChangePage
     } = this.props;
     const jsList = list.toJS();
     const pageList = [];
@@ -95,16 +113,30 @@ class Header extends Component {
     }
 
     if (focused || mouseIn) {
-      return <SearchInfo onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+      return (
+        <SearchInfo
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+        >
           <SearchInfoTitle>
             热门搜索
-            <SearchInfoSwitch onClick={() => handleChangePage(page, totalPage, this.spinIcon)}>
-              <i ref={icon => {this.spinIcon = icon}} className="iconfont spin">&#xe851;</i>
+            <SearchInfoSwitch
+              onClick={() => handleChangePage(page, totalPage, this.spinIcon)}
+            >
+              <i
+                ref={icon => {
+                  this.spinIcon = icon;
+                }}
+                className="iconfont spin"
+              >
+                &#xe851;
+              </i>
               换一批
             </SearchInfoSwitch>
           </SearchInfoTitle>
           <SearchInfoList>{pageList}</SearchInfoList>
-        </SearchInfo>;
+        </SearchInfo>
+      );
     } else {
       return null;
     }
@@ -126,13 +158,14 @@ const mapStateToProps = state => {
     page: state.getIn(["header", "page"]),
     totalPage: state.getIn(["header", "totalPage"]),
     mouseIn: state.getIn(["header", "mouseIn"]),
+    login: state.getIn(["login", "login"])
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     handleInputFocus(list) {
-      (list.size === 0) && dispatch(actionCreators.getList());
+      list.size === 0 && dispatch(actionCreators.getList());
       dispatch(actionCreators.searchFocus());
     },
     handleInputBlur() {
@@ -145,7 +178,7 @@ const mapDispatchToProps = dispatch => {
       dispatch(actionCreators.mouseLeave());
     },
     handleChangePage(page, totalPage, spin) {
-      let originAngle = spin.style.transform.replace(/[^0-9]/ig, '');
+      let originAngle = spin.style.transform.replace(/[^0-9]/gi, "");
       if (originAngle) {
         originAngle = parseInt(originAngle, 10);
       } else {
@@ -157,6 +190,9 @@ const mapDispatchToProps = dispatch => {
       } else {
         dispatch(actionCreators.changePage(1));
       }
+    },
+    logout() {
+      dispatch(loginActionCreators.logout());
     }
   };
 };

@@ -25,7 +25,6 @@ export default class Slider extends Component {
       interval: true,
       arrowShow: false
     };
-    this.handleSlider = this.handleSlider.bind(this);
     this.handleStopInterval = this.handleStopInterval.bind(this);
     this.handleRunInterval = this.handleRunInterval.bind(this);
     this.handleDotClick = this.handleDotClick.bind(this);
@@ -34,8 +33,23 @@ export default class Slider extends Component {
   }
 
   componentDidMount = () => {
-    this.handleSlider();
+    this.timer = setInterval(() => {
+      let { imgList, index, interval } = this.state;
+      if (interval) {
+        if (index < imgList.length - 1) {
+          this.setState(() => ({ index: ++index }));
+        } else {
+          this.setState(() => ({ index: 0 }));
+        }
+      } else {
+        this.setState(() => ({ index }));
+      }
+    }, 5000);
   };
+
+  componentWillUnmount() {
+    clearInterval(this.timer);
+  }
 
   render() {
     const { imgList, index, arrowShow } = this.state;
@@ -76,20 +90,6 @@ export default class Slider extends Component {
         </RightArrow>
       </Container>
     );
-  }
-  handleSlider() {
-    setInterval(() => {
-      let { imgList, index, interval } = this.state;
-      if (interval) {
-        if (index < imgList.length - 1) {
-          this.setState((state, props) => ({ index: ++index }));
-        } else {
-          this.setState((state, props) => ({ index: 0 }));
-        }
-      } else {
-        this.setState((state, props) => ({ index }));
-      }
-    }, 5000);
   }
   handleStopInterval() {
     this.setState((state, props) => ({ interval: false, arrowShow: true }));
