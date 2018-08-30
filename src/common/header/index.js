@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCompass, faMobileAlt } from "@fortawesome/free-solid-svg-icons";
 import { CSSTransition } from "react-transition-group";
 import { actionCreators } from "./store";
-import { actionCreators as loginActionCreators } from '../../pages/login/store';
+import { actionCreators as loginActionCreators } from "../../pages/login/store";
 import { Link } from "react-router-dom";
 import {
   HeaderWrapper,
@@ -53,9 +53,11 @@ class Header extends Component {
             下载APP
           </NavItem>
           {login ? (
-            <NavItem onClick={logout} className="right">退出</NavItem>
+            <NavItem onClick={logout} className="right">
+              退出
+            </NavItem>
           ) : (
-            <Link to='/login'>
+            <Link to="/login">
               <NavItem className="right">登录</NavItem>
             </Link>
           )}
@@ -79,10 +81,12 @@ class Header extends Component {
           </SearchWrapper>
           <Addition>
             <Button className="reg">注册</Button>
-            <Button className="writing">
-              <i className="iconfont">&#xe69f;</i>
-              写文章
-            </Button>
+            <Link to="/write">
+              <Button className="writing">
+                <i className="iconfont">&#xe69f;</i>
+                写文章
+              </Button>
+            </Link>
           </Addition>
         </Nav>
       </HeaderWrapper>
