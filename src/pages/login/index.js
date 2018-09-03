@@ -1,30 +1,24 @@
 import React, { PureComponent } from "react";
 import { connect } from "react-redux";
-import { LoginWrapper, LoginBox, Input, Button } from "./style";
-import { actionCreators } from './store';
-import { Redirect } from 'react-router-dom';
+import { actionCreators } from "./store";
+import { Redirect } from "react-router-dom";
+import EnhancedForm from "./form";
 
 class Login extends PureComponent {
   render() {
-    const { loginStatus, login } = this.props;
+    const { loginStatus } = this.props;
     if (!loginStatus) {
       return (
-        <LoginWrapper>
-          <LoginBox>
-            <Input placeholder='请输入账号' innerRef={input => { this.account = input }} />
-            <Input placeholder='请输入密码' type='password' innerRef={input => { this.password = input }} />
-            <Button onClick={() => login(this.account, this.password)}>登录</Button>
-          </LoginBox>
-        </LoginWrapper>
+        <EnhancedForm />
       );
     } else {
-      return <Redirect to='/'></Redirect>
+      return <Redirect to="/" />;
     }
   }
 }
 
 const mapState = state => ({
-  loginStatus: state.getIn(['login', 'login'])
+  loginStatus: state.getIn(["login", "login"])
 });
 
 const mapDispatch = dispatch => ({
